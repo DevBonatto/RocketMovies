@@ -49,7 +49,11 @@ This project involves the creation of an API, which can be used to interact with
 ## ▶️ Running API
 Clone the project with:
 ```bash
-  git clone https://github.com/DevBonatto/MoviesAPI.git
+  git clone https://github.com/DevBonatto/RocketMovies
+```
+Access API folder:
+```bash
+  cd api
 ```
 
 Then use this command to install the dependencies:
@@ -73,9 +77,9 @@ Develop:
 ```
 
 ## ▶️ Running UI
-Clone the project with:
+Access UI folder:
 ```bash
-  git clone https://github.com/DevBonatto/MoviesUI.git
+  cd frontend
 ```
 
 Then use this command to install the dependencies:
