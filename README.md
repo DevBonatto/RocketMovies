@@ -76,7 +76,7 @@ Develop start:
   npm run dev
 ```
 
-**You can use the Beekeeper Studio to access the database**
+**You can use the [Beekeeper Studio](https://www.beekeeperstudio.io/) to access the database**
 
 ## ▶️ Running UI
 Access UI folder:
