@@ -71,7 +71,7 @@ To start:
   npm start
 ```
 
-Develop:
+Develop start:
 ```bash
   npm run dev
 ```
