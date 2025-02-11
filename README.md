@@ -1,5 +1,5 @@
 ## ⭐ About
-This project involves the creation of an API, which can be used to interact with the database and the movies_ui project.
+This project involves building an API to manage interactions between the database and the frontend, ensuring seamless communication and efficient data handling.
 
 ## 📚 Learnings
 - Creating React project with Vite
