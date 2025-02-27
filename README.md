@@ -32,6 +32,7 @@ This project involves building an API to manage interactions between the databas
 
 ## 🚀 Technologies/Tools
 - JavaScript
+- React
 - Node.js
 - Node Express
 - Nodemon
