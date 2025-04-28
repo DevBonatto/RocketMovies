@@ -32,6 +32,7 @@ This project involves building an API to manage interactions between the databas
 
 ## 🚀 Technologies/Tools
 - JavaScript
+- React
 - Node.js
 - Node Express
 - Nodemon
@@ -76,7 +77,7 @@ Develop start:
   npm run dev
 ```
 
-**You can use the Beekeeper Studio to access the database**
+**You can use the [Beekeeper Studio](https://www.beekeeperstudio.io/) to access the database**
 
 ## ▶️ Running UI
 Access UI folder:
