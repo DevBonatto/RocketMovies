@@ -27,11 +27,11 @@ class UsersController {
 
   static async update(req, res) {
     const { name, email, password, old_password } = req.body
-    const { id } = req.params
+    const user_id = req.user.id
 
     const user = await knex("users")
       .select("*")
-      .where({ id })
+      .where({ id: user_id })
       .first()
     
     if(!user) {
@@ -42,11 +42,11 @@ class UsersController {
     ? await knex('users').select('*').where({ email }).first()
     : null
     
-    if(userUpdatingWithSameEmail && userUpdatingWithSameEmail.id === user.id){
+    if(userUpdatingWithSameEmail && userUpdatingWithSameEmail.id === user_id){
       throw new AppError("Você já tem esse email cadastrado")
     }
 
-    if(userUpdatingWithSameEmail && userUpdatingWithSameEmail.id !== user.id){
+    if(userUpdatingWithSameEmail && userUpdatingWithSameEmail.id !== user_id){
       throw new AppError("Esse email já está cadastrado no sistema")
     }
 
@@ -68,7 +68,7 @@ class UsersController {
     user.email = email ?? user.email
 
     await knex('users')
-    .where({ id }) 
+    .where({ id: user_id }) 
     .update({
       name: user.name,
       email: user.email,

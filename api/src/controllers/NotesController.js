@@ -3,9 +3,8 @@ const AppError = require("../utils/appError")
 class NotesController {
   static async create(req, res) {
     const { title, description, rating, tags } = req.body
-    const { user_id } = req.params
+    const user_id = req.user.id
 
-    console.log(rating)
     if(rating > 5 || rating < 0) {
       throw new AppError("Por favor, escolha uma nota de entre 0 e 5")
     }
@@ -31,10 +30,10 @@ class NotesController {
   }
 
   static async show(req, res) {
-    const { id } = req.params
+    const user_id = req.user.id
 
-    const note = await knex("movie_notes").where({ id }).first()
-    const tags = await knex("movie_tags").where({ note_id: id }).orderBy("name")
+    const note = await knex("movie_notes").where({ user_id: user_id }).first()
+    const tags = await knex("movie_tags").where({ user_id: user_id }).orderBy("name")
 
     return res.status(200).json({ 
       note,
@@ -51,7 +50,7 @@ class NotesController {
   }
 
   static async index(req, res) {
-    const { rating } = req.query
+    const { rating } = req.params
 
     const moviesWithSpecificRating = await knex("movie_notes").where({ rating: rating })
 
