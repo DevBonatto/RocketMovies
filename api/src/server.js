@@ -3,13 +3,13 @@ const AppError = require("./utils/appError")
 const express = require('express')
 const app = express()
 const PORT = 3000
-const cors = require("cors")
 const uploadConfig = require("./configs/upload")
 const routes = require("./routes")
 
-app.use(cors)
+const cors = require("cors")
+app.use(cors())
 app.use(express.json())
-app.use(routes) 
+app.use(routes)
 
 app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
 
