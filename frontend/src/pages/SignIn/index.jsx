@@ -1,14 +1,17 @@
 import { Container } from "./style"
 import { FiMail, FiLock } from "react-icons/fi"
+import { Link } from "react-router-dom";
+
+import { useAuth } from "../../hooks/auth"
 
 import { Input } from "../../components/Input"
 import { Button } from "../../components/Button"
-
-import { Link } from "react-router-dom";
-
 import registerLoginImg from "../../assets/register-login.jpg"
 
 export function SignIn() {
+
+  const data = useAuth()
+  console.log(data)
   return (
     <Container>
       <div className="info">
