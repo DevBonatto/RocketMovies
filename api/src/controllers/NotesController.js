@@ -29,16 +29,25 @@ class NotesController {
     return res.status(200).json()
   }
 
-  static async show(req, res) {
+  static async index(req, res) {
     const user_id = req.user.id
 
-    const note = await knex("movie_notes").where({ user_id: user_id }).first()
-    const tags = await knex("movie_tags").where({ user_id: user_id }).orderBy("name")
+    const notes = await knex("movie_notes")
+      .where({ user_id })
+      .orderBy("created_at", "desc")
 
-    return res.status(200).json({ 
-      note,
-      tags
-     })
+    const tags = await knex("movie_tags").where({ user_id })
+
+    const notesWithTags = notes.map(note => {
+    const noteTags = tags.filter(tag => tag.note_id === note.id)
+
+      return {
+        ...note,
+        tags: noteTags
+      }
+    })
+
+    return res.status(200).json(notesWithTags)
   }
 
   static async delete(req, res) {
@@ -47,14 +56,6 @@ class NotesController {
     await knex("movie_notes").where({ id }).delete()
 
     return res.status(200).json()
-  }
-
-  static async index(req, res) {
-    const { rating } = req.params
-
-    const moviesWithSpecificRating = await knex("movie_notes").where({ rating: rating })
-
-    return res.status(200).json({ moviesWithSpecificRating })
   }
 }
 
