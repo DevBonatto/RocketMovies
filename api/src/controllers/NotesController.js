@@ -50,6 +50,18 @@ class NotesController {
     return res.status(200).json(notesWithTags)
   }
 
+  static async show(req, res) {
+    const { id } = req.params
+
+    const note = await knex("movie_notes").where({ id }).first()
+    const tags = await knex("movie_tags").where({ note_id: id }).orderBy("name")
+
+    return res.json({
+      ...note,
+      tags
+    })
+  }
+
   static async delete(req, res) {
     const { id } = req.params
 

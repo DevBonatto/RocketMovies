@@ -11,7 +11,7 @@ export const Container = styled.div`
   .title {
     margin: 24px 0;
     display: flex;
-    align-items: end;
+    align-items: baseline;
     gap: 20px;
   }
 

@@ -12,7 +12,6 @@ export function Home() {
     async function fetchMovies() {
       try {
         const response = await api.get("/notes")
-        console.log(response.data)
         setMovies(response.data)
       } catch (error) {
         console.error("Erro ao buscar filmes:", error)
@@ -31,7 +30,6 @@ export function Home() {
           <FiPlus />
           Adicionar Filme
         </Button>
-        
       </header>
       <main>
         {movies.map(movie => (

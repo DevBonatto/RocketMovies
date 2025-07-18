@@ -2,8 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
   display: flex;
-  gap: 6px;
-  width: 100%;
+  gap: 12px;
   margin: 8px 0 16px;
 
   svg {

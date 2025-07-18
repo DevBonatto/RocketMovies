@@ -8,5 +8,6 @@ notesRouter.use(ensureAuthenticated)
 notesRouter.post("/", NotesController.create)
 notesRouter.delete("/:id", NotesController.delete)
 notesRouter.get("/", NotesController.index)
+notesRouter.get("/:id", NotesController.show)
 
 module.exports = notesRouter
