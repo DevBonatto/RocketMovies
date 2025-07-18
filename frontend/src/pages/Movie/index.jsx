@@ -69,7 +69,7 @@ export function Movie() {
 
         <div className="button">
           <Button name="Excluir anotação" onClick={handleDelete} />
-          <Button name="Editar anotação" onClick={handleEdit} />
+          <Button name="Editar anotação" onClick={() => navigate(`/newmovie/${id}`)} />
         </div>
       </Container>
     </>

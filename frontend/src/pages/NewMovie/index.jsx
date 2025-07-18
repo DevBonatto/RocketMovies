@@ -5,9 +5,9 @@ import { Button } from "../../components/Button"
 import { FiArrowLeft } from "react-icons/fi"
 import { Input } from "../../components/Input"
 import { TagItem } from "../../components/TagItem"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { api } from "../../services/api"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 export function NewMovie() {
   const [title, setTitle] = useState("")
@@ -17,6 +17,8 @@ export function NewMovie() {
   const [newTag, setNewTag] = useState("")
 
   const navigate = useNavigate()
+
+  const { id } = useParams()
 
   function handleAddTag() {
     if (!newTag.trim()) return
@@ -28,7 +30,7 @@ export function NewMovie() {
     setTags(prev => prev.filter(tag => tag !== deletedTag))
   }
 
-  async function handleNewNote(e) {
+  async function handleSaveNote(e) {
     e.preventDefault()
 
     if (!title || !rating) {
@@ -40,14 +42,24 @@ export function NewMovie() {
     }
 
     try {
-      const response = await api.post("/notes", {
-        title,
-        description,
-        rating: Number(rating),
-        tags
-      })
-      console.log("Resposta da API:", response)
-      alert("Nota criada com sucesso!")
+      if (id) {
+        await api.put(`/notes/${id}`, {
+          title,
+          description,
+          rating: Number(rating),
+          tags
+        })
+        alert("Nota atualizada com sucesso!")
+      } else {
+        await api.post("/notes", {
+          title,
+          description,
+          rating: Number(rating),
+          tags
+        })
+        alert("Nota criada com sucesso!")
+      }
+
       navigate("/")
     } catch (error) {
       alert("Erro ao salvar nota")
@@ -55,13 +67,33 @@ export function NewMovie() {
     }
   }
 
+  useEffect(() => {
+    async function fetchNoteToEdit() {
+      if (!id) return
+
+      try {
+        const response = await api.get(`/notes/${id}`)
+        const note = response.data
+
+        setTitle(note.title)
+        setDescription(note.description)
+        setRating(String(note.rating))
+        setTags(note.tags.map(tag => tag.name))
+      } catch (error) {
+        alert("Erro ao carregar nota para edição")
+      }
+    }
+
+    fetchNoteToEdit()
+  }, [id])
+
   return (
     <>
       <Header />
       <Container>
         <main>
           <TextButton icon={FiArrowLeft} text="Voltar" to="/" />
-          <h2>Novo Filme</h2>
+          <h2>{id ? "Editar anotação" : "Nova anotação"}</h2>
           <Form>
             <div className="header">
               <Input 
@@ -98,7 +130,7 @@ export function NewMovie() {
               />
             </div>
             <div className="buttons">
-              <Button name="Salvar Alterações" onClick={(e) => handleNewNote(e)} />
+              <Button name="Salvar Alterações" onClick={(e) => handleSaveNote(e)} />
             </div>
           </Form>
         </main>

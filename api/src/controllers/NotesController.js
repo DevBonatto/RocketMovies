@@ -29,6 +29,39 @@ class NotesController {
     return res.status(200).json()
   }
 
+  static async update(req, res) {
+    const { title, description, rating, tags } = req.body
+    const { id } = req.params
+    const user_id = req.user.id
+
+    if (rating > 5 || rating < 0) {
+      throw new AppError("Por favor, escolha uma nota entre 0 e 5")
+    }
+
+    await knex("movie_notes")
+      .where({ id })
+      .update({
+        title,
+        description,
+        rating,
+        updated_at: knex.fn.now()
+      })
+
+    await knex("movie_tags").where({ note_id: id }).delete()
+
+    const tagsInsert = tags.map(name => ({
+      note_id: id,
+      name,
+      user_id
+    }))
+
+    if (tagsInsert.length > 0) {
+      await knex("movie_tags").insert(tagsInsert)
+    }
+
+    return res.status(200).json()
+  }
+
   static async index(req, res) {
     const user_id = req.user.id
 
