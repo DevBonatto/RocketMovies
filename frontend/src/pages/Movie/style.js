@@ -45,5 +45,15 @@ export const Container = styled.div`
     overflow-y: auto;
     padding-right: 10px;
   }
-  
+
+  .button {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  button {
+    width: 25%;
+  }
 `

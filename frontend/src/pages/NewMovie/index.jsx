@@ -7,6 +7,7 @@ import { Input } from "../../components/Input"
 import { TagItem } from "../../components/TagItem"
 import { useState } from "react"
 import { api } from "../../services/api"
+import { useNavigate } from "react-router-dom"
 
 export function NewMovie() {
   const [title, setTitle] = useState("")
@@ -14,6 +15,8 @@ export function NewMovie() {
   const [description, setDescription] = useState("")
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState("")
+
+  const navigate = useNavigate()
 
   function handleAddTag() {
     if (!newTag.trim()) return
@@ -25,7 +28,9 @@ export function NewMovie() {
     setTags(prev => prev.filter(tag => tag !== deletedTag))
   }
 
-  async function handleNewNote() {
+  async function handleNewNote(e) {
+    e.preventDefault()
+
     if (!title || !rating) {
       return alert("Título e nota são obrigatórios")
     }
@@ -35,14 +40,15 @@ export function NewMovie() {
     }
 
     try {
-      await api.post("/notes", {
+      const response = await api.post("/notes", {
         title,
         description,
         rating: Number(rating),
         tags
       })
-      
+      console.log("Resposta da API:", response)
       alert("Nota criada com sucesso!")
+      navigate("/")
     } catch (error) {
       alert("Erro ao salvar nota")
       console.error(error)
@@ -92,8 +98,7 @@ export function NewMovie() {
               />
             </div>
             <div className="buttons">
-              <Button name="Excluir Filme" className="delete" />
-              <Button name="Salvar Alterações" onClick={handleNewNote} />
+              <Button name="Salvar Alterações" onClick={(e) => handleNewNote(e)} />
             </div>
           </Form>
         </main>

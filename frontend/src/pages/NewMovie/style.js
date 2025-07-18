@@ -50,7 +50,9 @@ export const Form = styled.form`
   }
 
   .buttons {
+    width: 100%;
     display: flex;
+    justify-content: center;
     gap: 40px;
   }
 

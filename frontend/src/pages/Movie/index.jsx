@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 import { api } from "../../services/api"
@@ -9,10 +9,12 @@ import { TextButton } from "../../components/TextButton"
 import { FiArrowLeft, FiClock } from "react-icons/fi"
 import { Stars } from "../../components/Stars"
 import { Tag } from "../../components/Tag"
+import { Button } from "../../components/Button"
 
 export function Movie() {
   const { id } = useParams()
   const [data, setData] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchNote() {
@@ -25,6 +27,17 @@ export function Movie() {
 
   if (!data) {
     return <p>Carregando...</p>
+  }
+
+  async function handleDelete() {
+    try {
+      await api.delete(`/notes/${id}`)
+      alert("Nota deletada com sucesso!")
+      navigate("/")
+    } catch (error) {
+      alert("Erro ao deletar a nota")
+      console.error(error)
+    }
   }
 
   return (
@@ -52,6 +65,11 @@ export function Movie() {
         
         <div className="about">
           <p>{data.description}</p>
+        </div>
+
+        <div className="button">
+          <Button name="Excluir anotação" onClick={handleDelete} />
+          <Button name="Editar anotação" onClick={handleEdit} />
         </div>
       </Container>
     </>

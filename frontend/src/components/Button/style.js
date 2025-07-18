@@ -7,7 +7,7 @@ export const Container = styled.button`
   background-color: ${({ theme }) => theme.COLORS.SALMON};
   border: none;
   height: 56px;
-  width: 100%;
+  width: 50%;
   border-radius: 10px;
   margin: 16px 0 42px;
   align-items: center;
