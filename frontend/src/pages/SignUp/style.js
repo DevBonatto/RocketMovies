@@ -36,6 +36,11 @@ export const Container = styled.div`
     a.back {
      margin: 0 auto;
     }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   img {

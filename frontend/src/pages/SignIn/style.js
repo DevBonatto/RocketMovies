@@ -30,6 +30,11 @@ export const Container = styled.div`
       font-weight: 400;
       margin: 0 auto;
     }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   img {

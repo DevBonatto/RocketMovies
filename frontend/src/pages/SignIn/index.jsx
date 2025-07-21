@@ -38,11 +38,14 @@ export function SignIn() {
           icon={FiLock} 
           onChange={e => setPassword(e.target.value)}
         />
-        <Button 
+
+        <div className="buttons">
+          <Button 
           name="Entrar"
           onClick={handleSignIn}
         />
-
+        </div>
+        
         <Link to="/register">Criar conta</Link>
       </div>
       <img src={registerLoginImg} alt="Cadeiras de um cinema/teatro" />
