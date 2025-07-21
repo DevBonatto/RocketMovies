@@ -6,14 +6,14 @@ import { useAuth } from "../../hooks/auth"
 
 export function Header() {
 
-  const { signOut } = useAuth()
+  const { signOut, user } = useAuth()
 
   return (
     <Container>
       <Link to="/" className="title">Rocket Movies</Link>
       <Input icon ={FiSearch}placeholder="Pesquisar pelo título"/>
       <div className="user-info">
-        <p>Lucca Bonatto</p>
+        <p>{ user.name }</p>
         <a onClick={signOut}>Sair</a>
       </div>
       <Link to="/user">
