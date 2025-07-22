@@ -6,6 +6,7 @@ import { Input } from "../../components/Input"
 import { Button } from "../../components/Button"
 
 import { useAuth } from "../../hooks/auth"
+import { api } from "../../services/api"
 
 export function User() {
   const { user } = useAuth()
@@ -14,6 +15,26 @@ export function User() {
   const [email, setEmail] = useState(user.email)
   const [oldPassword, setOldPassword] = useState()
   const [newPassword, setNewPassword] = useState()
+
+  async function handleSaveUser(e) {
+    e.preventDefault()
+
+    try {
+      await api.put("users", {
+        name, 
+        email, 
+        password: newPassword,
+        old_password: oldPassword,
+      })
+      alert("Usuário atualizado com sucesso!")
+    } catch (error) {
+        if (error.response) {
+          alert("Erro ao salvar o usuário: " + error.response.data.message)
+        } else {
+          alert("Erro inesperado: " + error.message)
+        }
+      }
+  }
 
   return (
     <Container>
@@ -53,15 +74,17 @@ export function User() {
           <Input 
             type="password" 
             icon={FiLock} 
+            onChange={(e => setOldPassword(e.target.value))}
             placeholder="Senha Atual" 
           />
           <Input 
             type="password" 
             icon={FiLock} 
+            onChange={(e => setNewPassword(e.target.value))}
             placeholder="Nova Senha" 
           />
 
-          <Button name="Salvar" />
+          <Button name="Salvar" onClick={(e) => handleSaveUser(e) } />
         </form>
       </main>
     </Container>
