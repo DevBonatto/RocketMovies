@@ -8,13 +8,30 @@ import { api } from "../../services/api"
 import registerLoginImg from "../../assets/register-login.jpg"
 import { Button } from "../../components/Button"
 import { TextButton } from "../../components/TextButton"
+import { useNavigate } from "react-router-dom"
 
 export function SignUp() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
+  const navigate = useNavigate()
+
   function handleSignUp() {
+
+    if (!name.trim() || name.length < 3) {
+      return alert("Nome deve ter pelo menos 3 caracteres.");
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return alert("Digite um email válido.");
+    }
+
+    if (password.length < 6) {
+      return alert("A senha deve ter pelo menos 6 caracteres.");
+    }
+    
     if(!name || !email || !password) {
       return alert("Preencha todos os campos!")
     }
@@ -22,6 +39,7 @@ export function SignUp() {
     api.post("/users", { name, email, password })
     .then(() => {
       alert("Usuário criado com sucesso!")
+      navigate("/")
     })
     .catch(error => {
       if(error.response) {
