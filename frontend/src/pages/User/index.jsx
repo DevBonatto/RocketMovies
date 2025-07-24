@@ -7,14 +7,18 @@ import { Button } from "../../components/Button"
 
 import { useAuth } from "../../hooks/auth"
 import { api } from "../../services/api"
+import { useNavigate } from "react-router-dom"
 
 export function User() {
-  const { user } = useAuth()
+  const { user, updateUser } = useAuth()
 
   const [name, setName] = useState(user.name)
   const [email, setEmail] = useState(user.email)
   const [oldPassword, setOldPassword] = useState()
   const [newPassword, setNewPassword] = useState()
+
+  const navigate = useNavigate()
+  
 
   async function handleSaveUser(e) {
     e.preventDefault()
@@ -26,7 +30,11 @@ export function User() {
         password: newPassword,
         old_password: oldPassword,
       })
+
+      updateUser({ ...user, name, email })
+
       alert("Usuário atualizado com sucesso!")
+      navigate("/")
     } catch (error) {
         if (error.response) {
           alert("Erro ao salvar o usuário: " + error.response.data.message)

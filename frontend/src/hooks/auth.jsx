@@ -34,6 +34,14 @@ function AuthProvider({ children }) {
     setData({})
   }
 
+  function updateUser(updatedUser) {
+    setData(prev => ({
+      ...prev,
+      user: updatedUser
+    }))
+    localStorage.setItem("@rocketmovies:user", JSON.stringify(updatedUser))
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("@rocketmovies:token")
     const user = localStorage.getItem("@rocketmovies:user")
@@ -52,7 +60,8 @@ function AuthProvider({ children }) {
     <AuthContext.Provider value={{ 
       signIn,
       user: data.user,
-      signOut
+      signOut,
+      updateUser
      }}>
       { children }
     </AuthContext.Provider>
