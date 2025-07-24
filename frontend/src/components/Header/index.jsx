@@ -3,10 +3,18 @@ import { Input } from "../Input"
 import { FiSearch } from "react-icons/fi"
 import { Link } from "react-router-dom"
 import { useAuth } from "../../hooks/auth"
+import { api } from "../../services/api"
+
+import blankUser from "../../assets/blank-user.png"
+
 
 export function Header({ onSearch }) {
 
   const { signOut, user } = useAuth()
+
+  const avatarURL = user.avatar
+  ? `${api.defaults.baseURL}/files/${user.avatar}`
+  : blankUser;
 
   return (
     <Container>
@@ -21,7 +29,7 @@ export function Header({ onSearch }) {
         <a onClick={signOut}>Sair</a>
       </div>
       <Link to="/user">
-        <img src="https://github.com/DevBonatto.png" alt="Foto de Lucca Bonatto" />
+        <img src={avatarURL} alt={user.name} />
       </Link>
     </Container>
   )
