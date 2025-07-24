@@ -7,12 +7,15 @@ import { api } from "../../services/api"
 
 export function Home() {
   const [movies, setMovies] = useState([])
+  const [allMovies, setAllMovies] = useState([])
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     async function fetchMovies() {
       try {
         const response = await api.get("/notes")
-        setMovies(response.data)
+        setAllMovies(response.data)
+        setMovies(response.data)  
       } catch (error) {
         console.error("Erro ao buscar filmes:", error)
       }
@@ -20,9 +23,16 @@ export function Home() {
     fetchMovies()
   }, [])
 
+  useEffect(() => {
+    const filtered = allMovies.filter(movie =>
+      movie.title.toLowerCase().includes(search.toLowerCase())
+    )
+    setMovies(filtered)
+  }, [search])
+
   return (
   <>
-    <Header />
+    <Header onSearch={setSearch} />
     <Container>
       <header>
         <h2>Meus Filmes</h2>
